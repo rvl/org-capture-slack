@@ -1,0 +1,9 @@
+button[aria-label="Add to saved items"],
+button[aria-label="Remove from saved items"] {
+  /* background-color: red; */
+}
+
+button[aria-label="Add to saved items"] > .c-icon:before,
+button[aria-label="Remove from saved items"] > .c-icon:before {
+  content: "\1F984" !important;
+}
