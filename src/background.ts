@@ -99,11 +99,16 @@ async function doCapture(captureMetadata?: CaptureMetadata, token?: string): Pro
 }
 
 async function getCaptureURI(msg: MessageInfo) {
+  const day = (new Intl.DateTimeFormat('en-GB', { weekday: 'short' })).format(msg.date);
+  const time = msg.date.toISOString().replace(/:[0-9]+\..*/, "").replace("T", ` ${day} `);
+  const title = msg.author + (msg.channel ? ` in ${msg.channel}` : "");
+
+  // https://orgmode.org/manual/The-capture-protocol.html#The-capture-protocol
   const params = {
     url: msg.permalink,
-    // template: "S",
-    title: `Slack message from ${msg.author}`,
-    body: msg.content
+    template: "lm",
+    title,
+    body: `${title} at [${time}]\n${msg.content}`
   };
 
   return orgProtocolURI(params);

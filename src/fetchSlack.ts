@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AxiosInstance } from 'axios';
 
-import {CaptureMetadata, MessageInfo} from "./types";
+import {tsToTime, CaptureMetadata, MessageInfo} from "./types";
 
 export async function fetchMessageInfo(captureMetadata: CaptureMetadata, token: string): Promise<MessageInfo> {
   const client = axios.create({
@@ -9,19 +9,33 @@ export async function fetchMessageInfo(captureMetadata: CaptureMetadata, token: 
     headers: {'Authorization': 'Bearer ' + token }
   });
 
-  const [msg, permalink] = await Promise.all([
+  const [msg, permalink, channel] = await Promise.all([
     fetchMessage(client, captureMetadata.channelId, captureMetadata.ts),
-    fetchPermalink(client, captureMetadata.channelId, captureMetadata.ts)
+    fetchPermalink(client, captureMetadata.channelId, captureMetadata.ts),
+    fetchChannelName(client, captureMetadata.channelId),
   ]);
   const username = await fetchUsername(client, msg.user);
-  return { permalink, content: msg.text, author: username };
+  return {
+    permalink,
+    channel,
+    content: msg.text,
+    author: username,
+    date: tsToTime(captureMetadata.ts),
+  };
 }
+
 async function fetchPermalink(client: AxiosInstance, channel: string, ts: string): Promise<string> {
   const result = await client.get("chat.getPermalink", { params: {
     channel,
     message_ts: ts,
   } });
   return (result.data as any).permalink;
+}
+
+async function fetchChannelName(client: AxiosInstance, channel: string): Promise<string> {
+  const result = await client.get("conversations.info", { params: { channel } });
+  const info = (result.data as any).channel;
+  return info.is_channel ? `#${info.name}` : "";
 }
 
 interface Message {

@@ -9,5 +9,10 @@ export interface MessageInfo {
   // threadContent: string;
   content: string;
   author: string;
-  // date: string;
+  date: Date;
+  channel: string;
+}
+
+export function tsToTime(ts: string): Date {
+  return new Date(parseInt(ts.split(".", 1)[0], 10) * 1000);
 }

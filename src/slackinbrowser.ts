@@ -20,9 +20,7 @@ const url =
 
 if (url) {
   console.log("Opening Slack link in browser:", url);
-  chrome.tabs.query({currentWindow: true, active: true}, tabs => {
-    chrome.tabs.update((tabs[0].id as number), {url});
-  });
+  window.location.replace(url);
 } else {
   console.error("Open in browser link was not found.");
 }
