@@ -40,6 +40,8 @@ Add something like the following to your `org-capture-templates`:
 ")))
 ```
 
+The capture key is hard-coded to `lm`.
+
 ## Work in progress
 
 This is very rough code, under development. There is still some
