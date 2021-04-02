@@ -5,7 +5,8 @@ const srcDir = path.join(__dirname, "..", "src");
 
 module.exports = {
     entry: {
-      background: path.join(srcDir, 'background.ts'),
+      grabToken: path.join(srcDir, 'grabToken.ts'),
+      orgCaptureSlack: path.join(srcDir, 'orgCaptureSlack.ts'),
       content_script: path.join(srcDir, 'content_script.ts'),
       slackinbrowser: path.join(srcDir, 'slackinbrowser.ts'),
       popup: path.join(srcDir, 'popup.ts'),

@@ -1,15 +1,15 @@
 import {CaptureMetadata, MessageInfo} from "./types";
 import { fetchMessageInfo } from "./fetchSlack";
 
-let color = '#3aa757';
+const captureTemplate = "lm"
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ color });
-  console.log('Default background color set to %cgreen', `color: ${color}`);
+  chrome.storage.sync.set({ captureTemplate });
+  console.log(`Default capture template is %c${captureTemplate}`, 'background: #222; color: #bada55');
 });
 
 chrome.runtime.onStartup.addListener(() => {
-  chrome.storage.local.remove(["token", "captureMetadata"]);
+  chrome.storage.local.remove(["captureMetadata"]);
 });
 
 // This extension probably needs to be force-installed to use
@@ -22,19 +22,9 @@ chrome.runtime.onStartup.addListener(() => {
 // Block stars.add and stars.remove.
 // Get the auth token from the requests and pass it to the other process.
 chrome.webRequest.onBeforeRequest.addListener(
-  function(details) {
-    const form = details.requestBody.formData;
-    if (form) {
-      const token = form.token[0];
-      if (token) {
-        console.log("Have token from stars listener");
-        chrome.storage.local.set({ token });
-      }
-    }
-    return { cancel: true };
-  },
+  () =>{ return { cancel: true }; },
   {urls: ["https://*.slack.com/api/stars.*"]},
-  [ "blocking", "requestBody" ]
+  [ "blocking" ]
 );
 
 // chrome.storage.onChanged.addListener((changes, namespace) => {
@@ -51,8 +41,9 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 chrome.storage.onChanged.addListener(changes => {
   if (changes.captureMetadata?.newValue || changes.token?.newValue) {
-    chrome.storage.local.get(["token", "captureMetadata"], async items => {
-      if (await doCapture(items.captureMetadata, items.token)) {
+    const cfg = ["token", "captureMetadata", "captureTemplate"];
+    chrome.storage.local.get(cfg, async items => {
+      if (await doCapture(items.captureMetadata, items.token, items.captureTemplate)) {
         chrome.storage.local.remove("captureMetadata");
       }
     });
@@ -79,7 +70,7 @@ function orgProtocolURI(params: { [key: string]: string }): string {
   return scheme + method + "?" + query;
 }
 
-async function doCapture(captureMetadata?: CaptureMetadata, token?: string): Promise<boolean> {
+async function doCapture(captureMetadata?: CaptureMetadata, token?: string, template?: string): Promise<boolean> {
   if (captureMetadata && token) {
     console.log("captureMetadata", captureMetadata);
     console.log("token", token);
@@ -88,28 +79,26 @@ async function doCapture(captureMetadata?: CaptureMetadata, token?: string): Pro
     // const msg = { permalink: makeMessageURL(captureMetadata), content: "", author: "" }
     console.log("Message info", msg);
 
-    const uri = await getCaptureURI(msg);
+    const uri = getCaptureURI(msg, template || captureTemplate);
     console.log("URI: " + uri);
     chrome.tabs.query({currentWindow: true, active: true}, tabs => {
-      chrome.tabs.update((tabs[0].id as number), {url: uri});
+      chrome.tabs.update(tabs[0].id as number, {url: uri});
     });
     return true;
   }
   return false;
 }
 
-async function getCaptureURI(msg: MessageInfo) {
+function getCaptureURI(msg: MessageInfo, template: string): string {
   const day = (new Intl.DateTimeFormat('en-GB', { weekday: 'short' })).format(msg.date);
   const time = msg.date.toISOString().replace(/:[0-9]+\..*/, "").replace("T", ` ${day} `);
   const title = msg.author + (msg.channel ? ` in ${msg.channel}` : "");
 
   // https://orgmode.org/manual/The-capture-protocol.html#The-capture-protocol
-  const params = {
+  return orgProtocolURI({
     url: msg.permalink,
-    template: "lm",
+    template,
     title,
     body: `${title} at [${time}]\n${msg.content}`
-  };
-
-  return orgProtocolURI(params);
+  });
 }

@@ -23,3 +23,20 @@ document.addEventListener("click", e => {
     }
   }
 }, false);
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.token) {
+    document.body.dataset.token = request.token;
+
+    const font1 = `font: bold x-large "Helvetica", sans-serif; color: blue;`;
+    const font2 = `font: x-large "Courier", monospace; color: red; background: yellow;`;
+    console.info(`%c 🦄 Your Slack API token is: %c${request.token}%c 🦄`, font1, font2, font1);
+
+    // const el = document.createElement("script");
+    // el.src = "https://cdn.jsdelivr.net/npm/@slack/web-api@6.1.0/dist/WebClient.js";
+    // (el as any).onload = `window.client = new WebClient("${request.token}");`;
+    // document.body.appendChild(el);
+
+    sendResponse({msg: "OK"});
+  }
+});

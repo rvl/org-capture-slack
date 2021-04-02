@@ -34,7 +34,12 @@ Then add the `dist` dir as an "Unpacked Extension" to your Chrome profile extens
 
 ## Configuration
 
-You need a URL scheme handler for `org-protocol://` configured.
+You need to have org-protocl set up properly to begin with. So
+`emacsclient` and a URL scheme handler for `org-protocol://` need to
+be configured. Follow the instructions in the [org-mode
+Manual](https://orgmode.org/manual/The-capture-protocol.html#The-capture-protocol)
+then add the browser bookmarklet to check that it works.
+
 
 The org-mode side is configured in a similar manner to [org-capture-extension](https://github.com/sprig/org-capture-extension).
 
