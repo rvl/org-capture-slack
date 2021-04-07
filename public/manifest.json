@@ -5,17 +5,26 @@
   "manifest_version": 2,
   "background": {
     "persistent": true,
-    "scripts": ["js/grabToken.js", "js/orgCaptureSlack.js"]
+    "scripts": [
+      "background_grab_token.js",
+      "background_org_capture_slack.js",
+    ]
   },
   "content_scripts": [
     {
       "matches": ["https://*.slack.com/*"],
-      "css": ["content.css"],
-      "js": ["js/content_script.js"]
+      "css": ["css/content.css"],
+      "js": [
+        "content_capture_button.js",
+        "content_enhance_slack.js",
+      ]
     },
     {
-      "js": [ "js/slackinbrowser.js" ],
-      "matches": [ "http://*.slack.com/archives/*", "https://*.slack.com/archives/*" ],
+      "js": [ "content_slack_in_browser.js" ],
+      "matches": [
+        "http://*.slack.com/archives/*",
+        "https://*.slack.com/archives/*",
+      ],
       "run_at": "document_idle"
     }
   ],
