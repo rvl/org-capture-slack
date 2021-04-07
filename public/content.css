@@ -7,3 +7,8 @@ button[aria-label="Add to saved items"] > .c-icon:before,
 button[aria-label="Remove from saved items"] > .c-icon:before {
   content: "\1F984" !important;
 }
+
+/* remove the desktop notifications warning */
+.p-message_pane__foreword__notification_warning {
+  display: none;
+}

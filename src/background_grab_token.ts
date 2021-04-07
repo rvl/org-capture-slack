@@ -39,9 +39,13 @@ function sendTokenMessage(token: string) {
   chrome.tabs.query({currentWindow: true, active: true}, tabs => {
     const tabId = tabs[0]?.id as number;
     if (tabId) {
-      chrome.tabs.sendMessage(tabId, { token }, response => {
-        console.log(`Response message: ${response?.msg}`);
-      });
+      try {
+        chrome.tabs.sendMessage(tabId, { token }, response => {
+          console.log(`Response message: ${response?.msg}`);
+        });
+      } catch (err) {
+        // Sometimes we get "Receiving end does not exist."
+      }
     }
   });
 }
