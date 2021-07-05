@@ -1,0 +1,40 @@
+{
+  "name": "org-capture-slack",
+  "description": "Make org-mode links to slack messages.",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "browser-polyfill.js",
+      "chrome_background_grab_token.js",
+      "chrome_background_org_capture_slack.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.slack.com/*"],
+      "css": ["content.css"],
+      "js": [
+        "browser-polyfill.js",
+        "chrome_content_capture_button.js",
+        "chrome_content_enhance_slack.js"
+      ]
+    },
+    {
+      "matches": [ "*://*.slack.com/archives/*" ],
+      "run_at": "document_idle",
+      "js": [
+        "browser-polyfill.js",
+        "content_slack_in_browser.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "https://*.slack.com/api/*"
+  ]
+}

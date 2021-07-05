@@ -140,3 +140,9 @@ This is very rough code, under development. There is still some leftover example
       extension.
 - [ ] Add "quickview" of links to GitHub/Jira issues. So user can just
       hover over the link to see a preview of its content.
+
+## Firefox wip
+
+ - https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts
+ - Typescript bindings: [https://github.com/Lusito/webextension-polyfill-ts](webextension-polyfill-ts)
+ 

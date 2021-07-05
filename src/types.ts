@@ -16,3 +16,18 @@ export interface MessageInfo {
 export function tsToTime(ts: string): Date {
   return new Date(parseInt(ts.split(".", 1)[0], 10) * 1000);
 }
+
+/* Browser extension message passing */
+export type Msg = TokenMsg | CaptureMetadataMsg | OrgProtocolMsg;
+
+export interface TokenMsg {
+  token: string;
+}
+
+export interface CaptureMetadataMsg {
+  captureMetadata: CaptureMetadata;
+}
+
+export interface OrgProtocolMsg {
+  uri: string;
+}
