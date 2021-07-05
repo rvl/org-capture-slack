@@ -8,7 +8,9 @@
     "build": "webpack --config webpack/webpack.prod.js",
     "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "style": "prettier --write \"src/**/*.{ts,tsx}\""
+    "style": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "start:firefox": "web-ext run",
+    "package:firefox": "web-ext build"
   },
   "author": "Rodney Lorrimar",
   "license": "ISC",
@@ -26,9 +28,17 @@
     "ts-jest": "^25.2.1 ",
     "ts-loader": "^6.2.1",
     "typescript": "~3.8.3 ",
+    "web-ext": "^6.2.0",
     "webextension-polyfill-ts": "^0.26.0",
     "webpack": "^4.44.1",
     "webpack-cli": "~3.3.11",
     "webpack-merge": "~4.2.2"
+  },
+  "webExt": {
+    "sourceDir": "dist/",
+    "verbose": true,
+    "build": {
+      "overwriteDest": true
+    }
   }
 }
