@@ -13,7 +13,6 @@ browser.runtime.onConnect.addListener((p: Runtime.Port) => {
       const { token } = await browser.storage.local.get("token");
       if (token) {
         const uri = await doCapture(msg.captureMetadata, token, captureTemplate);
-        console.log("posting message for", uri);
         p.postMessage({ uri });
         return uri;
       }
