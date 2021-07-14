@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "watch": "webpack --config webpack/webpack.dev.js --watch",
-    "build": "webpack --config webpack/webpack.prod.js",
+    "build": "npm run build:chrome ; npm run build:firefox",
+    "build:chrome": "webpack --config webpack/webpack.chrome.prod.js",
+    "build:firefox": "webpack --config webpack/webpack.firefox.prod.js",
     "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "style": "prettier --write \"src/**/*.{ts,tsx}\"",
