@@ -9,7 +9,6 @@
   },
   "background": {
     "scripts": [
-      "browser-polyfill.js",
       "firefox_background_grab_token.js",
       "firefox_background_org_capture_slack.js"
     ]
@@ -18,11 +17,11 @@
     {
       "matches": ["*://*.slack.com/*"],
       "css": ["content.css"],
-      "js": [ "browser-polyfill.js", "content_capture_button.js" ]
+      "js": [ "content_capture_button.js" ]
     },
     {
       "matches": [ "*://*.slack.com/archives/*" ],
-      "js": [ "browser-polyfill.js", "content_slack_in_browser.js" ]
+      "js": [ "content_slack_in_browser.js" ]
     }
   ],
   "permissions": [

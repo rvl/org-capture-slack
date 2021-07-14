@@ -1,4 +1,4 @@
-# Chrome extension to capture links to slack messages
+# Firefox/Chrome extension to capture links to slack messages
 
 This extension hijacks the "Add to saved items" button in Slack, and replaces it with an [org-protocol](https://orgmode.org/manual/The-capture-protocol.html#The-capture-protocol) call.
 
@@ -30,7 +30,22 @@ npm install
 npm run build
 ```
 
-Then add the `dist` dir as an "Unpacked Extension" to your Chrome profile extensions.
+### Firefox
+
+1. Navigate to `about:debugging#/runtime/this-firefox`
+2. Select _This Firefox_ and expand the _Temporary Extensions_ section.
+3. Click _Load Temporary Add-on..._ and select `./dist/firefox/manifest.json`.
+
+The extension will eventually be published on
+[addons.mozilla.org/.../org-capture-slack](https://addons.mozilla.org/en-US/firefox/addon/org-capture-slack/).
+
+### Chrome
+
+(Chrome version may be broken at the moment ... I have been using Firefox).
+
+1. Navigate to `chrome://extensions`
+2. Enable _Developer Mode_.
+3. Click _Load Unpacked_ and add the `./dist/chrome/` directory as an "Unpacked Extension."
 
 ## Configuration
 
@@ -123,13 +138,19 @@ to `.emacs`:
 
 It assumes that your `browse-url-xdg-open` function will run Chrome.
 
+## Getting your Slack API key
+
+If you look in the javascript console of your Slack tab, you should
+see your Slack session token logged by this extension. This can be
+useful to have if you would like to try some Slack API calls, etc.
+
 ## Work in progress
 
-This is very rough code, under development. There is still some leftover example code from the Chrome Extensions tutorial.
+This code works for me on Firefox, but is still under development.
 
 ### TODO
 
-- [ ] Remove example code from tutorial.
+- [x] Remove example code from chrome extensions tutorial.
 - [ ] Convert UTC timestamps to local timezone.
 - [ ] Allow configuration of the org-capture key (currently hardcoded to "lm").
 - [ ] Find a way to block the permalink page from opening the
@@ -140,9 +161,5 @@ This is very rough code, under development. There is still some leftover example
       extension.
 - [ ] Add "quickview" of links to GitHub/Jira issues. So user can just
       hover over the link to see a preview of its content.
-
-## Firefox wip
-
- - https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts
- - Typescript bindings: [https://github.com/Lusito/webextension-polyfill-ts](webextension-polyfill-ts)
- 
+- [x] Add Firefox version.
+- [ ] Unbreak Chrome version.
