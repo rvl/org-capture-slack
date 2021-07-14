@@ -1,3 +1,4 @@
+/// <reference path="./xpconnect.d.ts" />
 import { browser, Runtime } from "webextension-polyfill-ts";
 
 const port: Runtime.Port = browser.runtime.connect("org-capture-slack@rodney.id.au", { name: "content-capture-button" });
@@ -7,6 +8,15 @@ port.onMessage.addListener(request => {
 
   if (request.token) {
     document.body.dataset.token = request.token;
+
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Sharing_objects_with_page_scripts
+    const wrappedJSObject = (window as any)["wrappedJSObject"];
+    if (wrappedJSObject) {
+      console.info("have wrappedJSObject", wrappedJSObject);
+      (window as any)["wrappedJSObject"].token = Components.utils.cloneInto(request.token, window);
+    } else {
+      console.warn("no wrappedJSObject");
+    }
 
     const font1 = `font: bold x-large "Helvetica", sans-serif; color: blue;`;
     const font2 = `font: x-large "Courier", monospace; color: red; background: yellow;`;
