@@ -34,7 +34,7 @@ port.onMessage.addListener(request => {
 function isOurButton(el: HTMLButtonElement) {
   const label = el.getAttribute("aria-label");
   return el.type === "button" &&
-    (label === "Add to saved items" || label === "Remove from saved items");
+    (label === "Save for later" || label === "Remove from Later");
 }
 
 document.addEventListener("click", e => {
