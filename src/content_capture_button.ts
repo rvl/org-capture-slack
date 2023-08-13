@@ -40,7 +40,7 @@ function isOurButton(el: HTMLButtonElement) {
 document.addEventListener("click", e => {
   for (let target = e.target; target && target !== document; target = (target as Element).parentNode) {
     // console.log("slack body clicked - target", target);
-    const button = target as HTMLButtonElement
+    const button = target as HTMLButtonElement;
     if (isOurButton(button)) {
       console.log("it's ours, with dataset", button.dataset);
       const meta = button.dataset.focusMetadata ? JSON.parse(button.dataset.focusMetadata) : undefined;
