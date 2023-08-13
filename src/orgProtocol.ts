@@ -9,8 +9,8 @@ export function makeMessageURL(meta: CaptureMetadata): string {
   // example:
   // https://rvl-test.slack.com/archives/CLEHCKMQW/p1616409584000200
   // {button: "save", channelId: "CLEHCKMQW", ts: "1616409584.000200", messageContainerType: "message-pane"}
-  const msg = "p" + meta.ts.replace(".", "");
-  return `${location.protocol}//${location.hostname}/archives/${meta.channelId}/${msg}`;
+  const msg = "p" + meta.uiState.ts.replace(".", "");
+  return `${location.protocol}//${location.hostname}/archives/${meta.id}/${msg}`;
 }
 
 export function orgProtocolURI(params: { [key: string]: string }): string {
