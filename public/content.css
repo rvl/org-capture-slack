@@ -1,14 +1,11 @@
-button[aria-label="Save for later"],
-button[aria-label="Remove from Later"] {
-  /* background-color: red; */
-  background-image: url("images/org-capture-slack48");
+[aria-label="Save for later"] > svg,
+[aria-label="Remove from Later"] > svg {
+  display: none;
 }
 
-button[aria-label="Save for later"] > svg,
-button[aria-label="Remove from Later"] > svg {
+[aria-label="Save for later"]::after,
+[aria-label="Remove from Later"]::after {
   content: "\1F984" !important;
-  /* background-image: url(http://moodle.org/mod/glossary/icon.gif); */
-  /* background-image: url("images/org-capture-slack48"); */
 }
 
 /* remove the desktop notifications warning */
