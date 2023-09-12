@@ -1,7 +1,10 @@
 // {button: "save", channelId: "CLEHCKMQW", ts: "1616409584.000200", messageContainerType: "message-pane"}
+// {id: "CLEHCKMQW", params: { messageContainerType: "Channel" }, uiState: { ts: "1689705262.534379", button: "later" }
 export interface CaptureMetadata {
-  channelId: string;
-  ts: string;
+  id: string;
+  uiState: {
+    ts: string;
+  };
 }
 
 export interface MessageInfo {

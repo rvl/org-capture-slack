@@ -1,10 +1,10 @@
-button[aria-label="Add to saved items"],
-button[aria-label="Remove from saved items"] {
-  /* background-color: red; */
+[aria-label="Save for later"] > svg,
+[aria-label="Remove from Later"] > svg {
+  display: none;
 }
 
-button[aria-label="Add to saved items"] > .c-icon:before,
-button[aria-label="Remove from saved items"] > .c-icon:before {
+[aria-label="Save for later"]::after,
+[aria-label="Remove from Later"]::after {
   content: "\1F984" !important;
 }
 

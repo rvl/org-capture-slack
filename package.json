@@ -18,24 +18,24 @@
   "author": "Rodney Lorrimar",
   "license": "ISC",
   "dependencies": {
-    "@slack/web-api": "^6.1.0",
-    "axios": "^0.21.1"
+    "@slack/web-api": "^6.9.0",
+    "axios": "^1.4.0"
   },
   "devDependencies": {
-    "@types/chrome": "0.0.100",
-    "@types/jquery": "^3.3.33",
-    "copy-webpack-plugin": "^6.1.0",
-    "glob": "^7.1.6",
-    "prettier": "^2.2.1",
-    "rimraf": "^3.0.2 ",
-    "ts-jest": "^25.2.1 ",
-    "ts-loader": "^6.2.1",
-    "typescript": "~3.8.3 ",
-    "web-ext": "^6.2.0",
+    "@types/chrome": "0.0.243",
+    "@types/jquery": "^3.5.16",
+    "copy-webpack-plugin": "^11.0.0",
+    "glob": "^10.3.3",
+    "prettier": "^3.0.1",
+    "rimraf": "^5.0.1",
+    "ts-jest": "^29.1.1",
+    "ts-loader": "^9.4.4",
+    "typescript": "~5.1.6",
+    "web-ext": "^4.0.0",
     "webextension-polyfill-ts": "^0.26.0",
-    "webpack": "^4.44.1",
-    "webpack-cli": "~3.3.11",
-    "webpack-merge": "~4.2.2"
+    "webpack": "^5.88.2",
+    "webpack-cli": "~5.1.4",
+    "webpack-merge": "~5.9.0"
   },
   "webExt": {
     "sourceDir": "dist/firefox/",
@@ -44,7 +44,9 @@
       "overwriteDest": true
     },
     "run": {
-      "startUrl": ["https://app.slack.com"],
+      "startUrl": [
+        "https://app.slack.com"
+      ],
       "browserConsole": true
     }
   }

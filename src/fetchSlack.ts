@@ -10,9 +10,9 @@ export async function fetchMessageInfo(captureMetadata: CaptureMetadata, token: 
   });
 
   const [msg, permalink, channel] = await Promise.all([
-    fetchMessage(client, captureMetadata.channelId, captureMetadata.ts),
-    fetchPermalink(client, captureMetadata.channelId, captureMetadata.ts),
-    fetchChannelName(client, captureMetadata.channelId),
+    fetchMessage(client, captureMetadata.id, captureMetadata.uiState.ts),
+    fetchPermalink(client, captureMetadata.id, captureMetadata.uiState.ts),
+    fetchChannelName(client, captureMetadata.id),
   ]);
   const username = await fetchUsername(client, msg.user);
   return {
@@ -20,7 +20,7 @@ export async function fetchMessageInfo(captureMetadata: CaptureMetadata, token: 
     channel,
     content: msg.text,
     author: username,
-    date: tsToTime(captureMetadata.ts),
+    date: tsToTime(captureMetadata.uiState.ts),
   };
 }
 
@@ -46,9 +46,10 @@ interface Message {
 }
 
 async function fetchMessage(client: AxiosInstance, channel: string, ts: string): Promise<Message> {
-  const result = await client.get("conversations.history", {
+  const result = await client.get("conversations.replies", {
     params: {
       channel,
+      ts: ts,
       latest: ts,
       inclusive: true,
       limit: 1,
